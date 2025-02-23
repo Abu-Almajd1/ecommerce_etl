@@ -26,5 +26,20 @@ services:
     depends_on:
       - postgres
 
+
+  dbt-postgres:
+    image: ghcr.io/dbt-labs/dbt-postgres:1.9.latest
+    container_name: dbt_postgres_container
+    restart: "no"
+    depends_on:
+      - postgres
+    volumes:
+      - ./your_dbt_project:./dbt
+    environment:
+      DBT_ENV_VAR: value
+    command: ["sh", "-c", "dbt --version && dbt run && dbt test"]
+
+
+
 volumes:
   postgres_data:
